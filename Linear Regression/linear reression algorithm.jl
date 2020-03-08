@@ -10,12 +10,15 @@ end
 
 
 function gradientDescent(x,y,theta,m,lr)
-    nIterations = 5
+    # println("m: ",m)
+    # println("theta size: ",size(theta))
+    #println(x)
+    nIterations = 15
     for i in nIterations
-        for j in size(theta)[1]
+        for j in 1:size(theta)[1]
             gradient = 0
-            for l in m
-                gradient += (hypothesis(x[l],theta) - y[j])*x[l][j]
+            for l in 1:m
+                gradient += (hypothesis(x[l,:],theta) - y[j])*x[l,j]
             end
             gradient *= 2/m
             theta[j] = theta[j] - (lr*gradient)
@@ -24,7 +27,6 @@ function gradientDescent(x,y,theta,m,lr)
     println(theta)
 end
 
-
 # prepare for calculations
 function prepare(x, y)
     # append the one vector into the x_text
@@ -32,14 +34,16 @@ function prepare(x, y)
     x = hcat(oneMatrix,x)
     # create the theta matrix and initialize them to zeros...
     theta = zeros(size(x)[2])
-    gradientDescent(x,y,theta,size(x)[1],0.1)
+    gradientDescent(x,y,theta,size(x)[1],0.05)
 end
 
 
 
 # hypothesis function
 function hypothesis(x,theta)
-    return x * theta
+    #println("x: ",size(x),"theta: ",size(theta))
+    return transpose(theta) * x
+
 end
 
 
