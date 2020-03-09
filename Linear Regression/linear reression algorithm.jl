@@ -13,8 +13,8 @@ function gradientDescent(x,y,theta,m,lr)
     # println("m: ",m)
     # println("theta size: ",size(theta))
     #println(x)
-    nIterations = 15
-    for i in nIterations
+    nIterations = 20
+    for i in 1:nIterations
         for j in 1:size(theta)[1]
             gradient = 0
             for l in 1:m
@@ -23,8 +23,9 @@ function gradientDescent(x,y,theta,m,lr)
             gradient *= 2/m
             theta[j] = theta[j] - (lr*gradient)
         end
+        println(theta)
     end
-    println(theta)
+    #println(theta)
 end
 
 # prepare for calculations
@@ -34,7 +35,7 @@ function prepare(x, y)
     x = hcat(oneMatrix,x)
     # create the theta matrix and initialize them to zeros...
     theta = zeros(size(x)[2])
-    gradientDescent(x,y,theta,size(x)[1],0.05)
+    gradientDescent(x,y,theta,size(x)[1],0.01)
 end
 
 
