@@ -8,6 +8,13 @@ function standardization(x)
     return StatsBase.transform(dt,x)
 end
 
+# predict function
+function predict(x_test,y_test,theta)
+    for i in 1:size(x_test)[1]
+        println("predicted: ",hypothesis(x_test[i,:],theta)," espected: ",y_test[i])
+    end
+end
+
 # gradient descent method
 function gradientDescent(x,y,theta,m,lr)
     nIterations = 70
@@ -25,22 +32,13 @@ function gradientDescent(x,y,theta,m,lr)
             theta[j] = theta[j] - (lr*gradient)
         end
         cost *= 1/m
-        println(i,"-cost: ",cost)
-        #println(theta)
+        # println(i,"-cost: ",cost)
+        # println(theta)
     end
     
     println("testing...")
-    # predict using the hypothesis function
-    println("predicted: ",hypothesis(x_test[1,:],theta)," espected: ",y_test[1])
-    println("predicted: ",hypothesis(x_test[80,:],theta)," espected: ",y_test[80])
-    println("predicted: ",hypothesis(x_test[3,:],theta)," espected: ",y_test[3])
-    println("predicted: ",hypothesis(x_test[5,:],theta)," espected: ",y_test[5])
-    println("predicted: ",hypothesis(x_test[24,:],theta)," espected: ",y_test[24])
-    println("predicted: ",hypothesis(x_test[10,:],theta)," espected: ",y_test[10])
-    println("predicted: ",hypothesis(x_test[2,:],theta)," espected: ",y_test[2])
-    println("predicted: ",hypothesis(x_test[14,:],theta)," espected: ",y_test[14])
-
-    #println(theta)
+    # predict
+    predict(x_test,y_test,theta)
 end
 
 # prepare for calculations
