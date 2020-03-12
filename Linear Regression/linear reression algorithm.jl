@@ -11,7 +11,7 @@ end
 # predict function
 function predict(x_test,y_test,theta)
     for i in 1:size(x_test)[1]
-        println("predicted: ",hypothesis(x_test[i,:],theta)," espected: ",y_test[i])
+        println("Predicted: ",hypothesis(x_test[i,:],theta)," Expected: ",y_test[i])
     end
 end
 
@@ -32,10 +32,11 @@ function gradientDescent(x,y,theta,m,lr)
             theta[j] = theta[j] - (lr*gradient)
         end
         cost *= 1/m
-        # println(i,"-cost: ",cost)
+        println(i,"-cost: ",cost)
         # println(theta)
     end
-    
+
+    println("\n\n\nTetha: ",theta)
     println("testing...")
     # predict
     predict(x_test,y_test,theta)
