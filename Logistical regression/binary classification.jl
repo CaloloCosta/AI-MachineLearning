@@ -160,7 +160,7 @@ end
 # hypothesis function
 function hypothesis(x, theta)
     z = theta' * x
-    return 1 / (1 + exp(z))
+    return 1 / (1 + exp(-z))
 end
 
 # gradient descent
@@ -168,15 +168,16 @@ function gradientDescent(x,y,theta,m,n,rp,lr)
     c = 0
     s = 0
     for i in 1:m
-        c += -y[i]*log(hypothesis(x[i,:],theta)) - (1 - y[i])*log(1 - hypothesis(x[i,:],theta))
+        c = -y[i]*log(hypothesis(x[i,:],theta)) - (1 - y[i])*log(1 - hypothesis(x[i,:],theta))
         for j in 2:n
             s += (theta[j])^2
         end
         s *= rp/(2*m)
         c *= 1/m
         c += s
-        theta = theta - lr*(1/m*x[i,:]*(hypothesis(x[i,:],theta)-y[i])+(rp/m)*theta)
-        println("cost: ",c)
+        theta = theta - lr*(1/m*x[i,:]*(hypothesis(x[i,:],theta)-y[i])+((rp/m)*theta))
+        #println("theata: ",theta)
+        #println("cost: ",c)
     end
 
     return theta
@@ -223,13 +224,19 @@ y_test = y[i+1:size(x)[1],:]
 # println("Features: ",features)
 # println("Outcome: ",y)
 
+println("mean output: ",mean(y_train))
 # gradient descent args desc: x,y,theta,size of the dataset, size of the features, rp, learning rate
 t = gradientDescent(x_train,y_train,theta,size(x_train)[1],size(x_train)[2],0.3,0.001)
-println("Predicted: ",hypothesis(x_test[4,:],t)," Expected: ",y_test[4])
-println("Predicted: ",hypothesis(x_test[7,:],t)," Expected: ",y_test[7])
-println("Predicted: ",hypothesis(x_test[10,:],t)," Expected: ",y_test[10])
-println("Predicted: ",hypothesis(x_test[1,:],t)," Expected: ",y_test[1])
-println("Predicted: ",hypothesis(x_test[15,:],t)," Expected: ",y_test[15])
+
+function predict(x,theta,y)
+    for i in 1:size(x)[1]
+        println("Predicted: ",hypothesis(x[i,:],theta)," Expected: ",y[i])
+    end
+end
+
+predict(x_test,t,y_train)
+
+
 #println(-y[1]*log(hypothesis(x[1,:],theta)) - (1 - y[1])*log(1 - hypothesis(x[1,:],theta)))
 
 #    println(theta - 0.01*(1/10*x[1,:]*(hypothesis(x[1,:],theta)-y[1])+(0.3/10)*theta))
